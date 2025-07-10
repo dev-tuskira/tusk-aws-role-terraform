@@ -133,6 +133,38 @@ The user/role deploying this configuration needs the following permissions in th
 | `external_id` | External ID for assume role security | `tuskira20250401` | No |
 | `cross_account_role_name` | Name of the created IAM role | `TuskiraCrossAccountReadOnlyRole` | No |
 
+## Backend Configuration
+
+This project uses an S3 backend to store Terraform state remotely. Before deployment, you need to configure the backend.
+
+### Step 1: Configure S3 Backend
+1. **Create an S3 bucket** in your AWS account for storing Terraform state
+2. **Update backend configuration**:
+   - Edit `backend.tf` file
+   - Replace the empty `bucket` value with your S3 bucket name
+   - Optionally, customize the `key` and `region` values
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket = "your-terraform-state-bucket-name"  # Replace with your bucket name
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+```
+
+3. **Optional: Enable state locking** by uncommenting the DynamoDB table configuration and creating a DynamoDB table
+
+### Step 2: Initialize Backend
+```bash
+# Initialize with backend configuration
+terraform init
+
+# Or initialize with bucket name as parameter
+terraform init -backend-config="bucket=your-terraform-state-bucket-name"
+```
+
 ## Deployment
 
 ### Step 1: Clone and Navigate
