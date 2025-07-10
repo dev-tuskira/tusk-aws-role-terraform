@@ -21,7 +21,7 @@ resource "aws_iam_role" "cross_account_readonly" {
   assume_role_policy = data.aws_iam_policy_document.cross_account_assume_role.json
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 
   tags = {
@@ -50,32 +50,39 @@ resource "aws_iam_role_policy_attachment" "inspector_readonly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonInspector2ReadOnlyAccess"
 }
 
-data "aws_ecr_repositories" "all" {}
-
 data "aws_iam_policy_document" "ecr_pull_policy" {
-  for_each = toset(data.aws_ecr_repositories.all.names)
-
   statement {
-    sid    = "CrossAccountPullFromDataCollectionRole"
+    sid    = "ECRPullAccess"
     effect = "Allow"
     actions = [
       "ecr:BatchGetImage",
       "ecr:GetDownloadUrlForLayer",
       "ecr:DescribeImages",
       "ecr:ListImages",
-      "ecr:BatchCheckLayerAvailability"
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:GetRepositoryPolicy",
+      "ecr:DescribeRepositories"
     ]
+    resources = ["*"]
+  }
 
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${var.principal_aws_account_id}:role/${var.principal_role_name}"]
-    }
+  statement {
+    sid    = "ECRAuthorizationToken"
+    effect = "Allow"
+    actions = [
+      "ecr:GetAuthorizationToken"
+    ]
+    resources = ["*"]
   }
 }
 
-resource "aws_ecr_repository_policy" "cross_account_pull" {
-  for_each = toset(data.aws_ecr_repositories.all.names)
+resource "aws_iam_policy" "ecr_pull_policy" {
+  name        = "${var.cross_account_role_name}-ECRPullAccess"
+  description = "Policy for ECR pull access"
+  policy      = data.aws_iam_policy_document.ecr_pull_policy.json
+}
 
-  repository = each.key
-  policy     = data.aws_iam_policy_document.ecr_pull_policy[each.key].json
+resource "aws_iam_role_policy_attachment" "ecr_pull_access" {
+  role       = aws_iam_role.cross_account_readonly.name
+  policy_arn = aws_iam_policy.ecr_pull_policy.arn
 }

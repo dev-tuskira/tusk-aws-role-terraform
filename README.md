@@ -1,6 +1,6 @@
 # Tuskira Cross-Account AWS IAM Role Terraform Configuration
 
-This Terraform configuration creates a cross-account, read-only IAM role for Tuskira data collection services with ECR repository access policies.
+This Terraform configuration creates a cross-account, read-only IAM role for Tuskira data collection services with modular IAM policies for ECR access.
 
 ## Overview
 
@@ -8,7 +8,7 @@ This configuration performs the following actions:
 
 1. **Creates a cross-account IAM role** that can be assumed by a principal in another AWS account, secured with an External ID
 2. **Attaches AWS-managed read-only policies** for comprehensive access to AWS services
-3. **Configures ECR repository policies** to allow cross-account image pulling
+3. **Creates modular IAM policies** for ECR pull access that can be attached to any role/user
 4. **Implements lifecycle protection** to prevent accidental deletion
 
 ## Architecture
@@ -26,6 +26,7 @@ This configuration performs the following actions:
 │  │  │  • AWSSecurityHubReadOnlyAccess                 │    │    │
 │  │  │  • AmazonEC2ContainerRegistryReadOnly           │    │    │
 │  │  │  • AmazonInspector2ReadOnlyAccess               │    │    │
+│  │  │  • Custom ECR Pull Policy                       │    │    │
 │  │  └─────────────────────────────────────────────────┘    │    │
 │  │                                                         │    │
 │  │  Trust Policy: External ID + Principal Account          │    │
@@ -36,8 +37,8 @@ This configuration performs the following actions:
 │  │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐        │    │
 │  │  │   Repo 1    │ │   Repo 2    │ │   Repo N    │        │    │
 │  │  │             │ │             │ │             │        │    │
-│  │  │Cross-account│ │Cross-account│ │Cross-account│        │    │
-│  │  │pull policy  │ │pull policy  │ │pull policy  │        │    │
+│  │  │ No policies │ │ No policies │ │ No policies │        │    │
+│  │  │  required   │ │  required   │ │  required   │        │    │
 │  │  └─────────────┘ └─────────────┘ └─────────────┘        │    │
 │  └─────────────────────────────────────────────────────────┘    │
 └─────────────────────────────────────────────────────────────────┘
@@ -58,7 +59,7 @@ This configuration performs the following actions:
 ## Directory Structure
 
 ```
-cft_terraform/
+tusk-aws-cross-account-terraform/
 ├── README.md                    # This file
 ├── main/                        # Main configuration directory
 │   ├── main.tf                  # Provider config and module call
@@ -86,7 +87,7 @@ cft_terraform/
 
 ### 🛡️ Operational Safety
 - **Lifecycle Protection**: Prevents accidental deletion of the IAM role
-- **Declarative ECR Policies**: Terraform manages all ECR repository policies
+- **Modular IAM Policies**: Reusable policies that can be attached to any role/user
 - **Consistent Configuration**: Version-controlled infrastructure as code
 
 ## Prerequisites
@@ -112,8 +113,9 @@ The user/role deploying this configuration needs the following permissions in th
                 "iam:ListAttachedRolePolicies",
                 "iam:TagRole",
                 "ecr:DescribeRepositories",
-                "ecr:GetRepositoryPolicy",
-                "ecr:SetRepositoryPolicy"
+                "iam:CreatePolicy",
+                "iam:GetPolicy",
+                "iam:AttachRolePolicy"
             ],
             "Resource": "*"
         }
@@ -136,7 +138,7 @@ The user/role deploying this configuration needs the following permissions in th
 ### Step 1: Clone and Navigate
 ```bash
 git clone <repository-url>
-cd cft_terraform/main
+cd tusk-aws-cross-account-terraform/main
 ```
 
 ### Step 2: Initialize Terraform
@@ -189,8 +191,8 @@ terraform apply -var-file="custom.tfvars"
 # Deploy only the IAM role
 terraform apply -target=module.tuskira_cross_account.aws_iam_role.cross_account_readonly
 
-# Deploy only ECR policies
-terraform apply -target=module.tuskira_cross_account.aws_ecr_repository_policy.cross_account_pull
+# Deploy only IAM policies
+terraform apply -target=module.tuskira_cross_account.aws_iam_policy.ecr_pull_policy
 ```
 
 ## Outputs
@@ -201,7 +203,7 @@ After successful deployment, the following outputs are available:
 |--------|-------------|
 | `cross_account_read_only_role_arn` | ARN of the created IAM role |
 | `role_name` | Name of the IAM role |
-| `ecr_repositories_updated` | List of ECR repositories with updated policies |
+| `ecr_pull_policy_arn` | ARN of the ECR pull policy (can be attached to other roles/users) |
 
 ### Retrieving Outputs
 ```bash
@@ -217,10 +219,10 @@ terraform output -json
 
 ## Important Considerations
 
-### 🚨 ECR Policy Management
-- **Complete Policy Ownership**: This Terraform configuration will **overwrite** any existing ECR repository policies
-- **New Repositories**: If you create new ECR repositories after deployment, run `terraform apply` again to update policies
-- **Policy Conflicts**: Remove any manually created ECR policies before deployment
+### 🚨 IAM Policy Management
+- **Modular Approach**: ECR access is managed through IAM policies attached to roles/users
+- **No ECR Repository Policies**: This configuration does not create ECR repository policies
+- **Reusable Policies**: The created ECR pull policy can be attached to additional roles/users as needed
 
 ### 🔄 State Management
 - **Remote State**: Consider using remote state storage (S3 + DynamoDB) for production deployments
@@ -237,12 +239,12 @@ terraform output -json
 
 ### Common Issues
 
-#### 1. ECR Repository Policy Conflicts
-**Error**: `ResourceInUseException: The repository policy for repository 'xxx' is being used by another request`
+#### 1. IAM Policy Conflicts
+**Error**: `EntityAlreadyExistsException: A policy called 'PolicyName' already exists`
 
 **Solution**: 
-- Wait a few minutes and retry
-- Check for other Terraform runs or manual policy changes
+- Import existing policy: `terraform import aws_iam_policy.ecr_pull_policy arn:aws:iam::ACCOUNT:policy/PolicyName`
+- Or use a different policy name
 
 #### 2. Role Already Exists
 **Error**: `EntityAlreadyExistsException: Role with name TuskiraCrossAccountReadOnlyRole already exists`
@@ -301,7 +303,7 @@ terraform apply
 terraform destroy
 
 # Destroy specific resources
-terraform destroy -target=module.tuskira_cross_account.aws_ecr_repository_policy.cross_account_pull
+terraform destroy -target=module.tuskira_cross_account.aws_iam_policy.ecr_pull_policy
 ```
 
 ⚠️ **Warning**: The IAM role has `prevent_destroy = true` lifecycle rule. To destroy it:
@@ -329,5 +331,6 @@ This configuration is provided as-is for Tuskira cross-account access setup. Rev
 ---
 
 **Generated with**: Terraform AWS Provider
-**Last Updated**: 2025-07-10
+**Last Updated**: 2025-07-10  
+**Architecture**: IAM Policy-Based ECR Access
 **Version**: 1.0.0

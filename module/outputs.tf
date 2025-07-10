@@ -8,7 +8,7 @@ output "role_name" {
   value       = aws_iam_role.cross_account_readonly.name
 }
 
-output "ecr_repositories_updated" {
-  description = "List of ECR repositories that had policies updated"
-  value       = data.aws_ecr_repositories.all.names
+output "ecr_pull_policy_arn" {
+  description = "ARN of the ECR pull policy"
+  value       = aws_iam_policy.ecr_pull_policy.arn
 }
