@@ -1,0 +1,484 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red21\green23\blue25;\red244\green245\blue246;\red43\green44\blue39;
+\red244\green246\blue249;}
+{\*\expandedcolortbl;;\cssrgb\c10980\c11765\c12941;\cssrgb\c96471\c96863\c97255;\cssrgb\c22353\c22745\c20392;
+\cssrgb\c96471\c97255\c98039;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid1\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid2\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid102\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid202\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listlevel\levelnfc4\levelnfcn4\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{lower-alpha\}}{\leveltext\leveltemplateid203\'01\'02;}{\levelnumbers\'01;}\fi-360\li2160\lin2160 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid301\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid401\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid5}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa500\partightenfactor0
+
+\f0\b\fs96 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AWS Permissions\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 Granting Cross-Account Read-Only, AWS Inspector, AWS SecurityHub, and ECR Pull Access.\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs64 \cf2 Overview\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\fs32 \cf2 Purpose
+\f1\b0 : Deploy a CloudFormation stack that:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Creates a cross-account read-only IAM role (with External ID) in the target account.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Attaches the following AWS-managed policies to cover all Tuskira use cases:\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls1\ilvl1
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 ReadOnlyAccess
+\f1\b0 \'a0(general AWS asset data)\
+\ls1\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AWSSecurityHubReadOnlyAccess
+\f1\b0 \'a0(Security Hub findings)\
+\ls1\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AmazonEC2ContainerRegistryReadOnly
+\f1\b0 \'a0(ECR vulnerability findings)\
+\ls1\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AmazonInspector2ReadOnlyAccess
+\f1\b0 \'a0(EC2 & Lambda vulnerability scanning)\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Sets ECR repository policies (via a Lambda custom resource) to allow the source account principal to pull images.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	4	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Retains the IAM role on stack deletion (so cross-account usage isn\'92t unexpectedly disrupted).\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs48 \cf2 Key Components\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0
+\fs32 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 IAM Role
+\f1\b0 \'a0(TuskiraCrossAccountReadOnlyRole) with:\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls2\ilvl1
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Managed Policies
+\f1\b0 : ReadOnlyAccess, AWSSecurityHubReadOnlyAccess, AmazonEC2ContainerRegistryReadOnly AmazonInspector2ReadOnlyAccess.\
+\ls2\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 A trust policy allowing
+\f1\b0 :\'a0
+\f2\fs30\fsmilli15200 \cb3 arn:aws:iam::324037289929:role/tuskira-data-collection
+\f1\fs32 \cb1 \'a0to assume it using an external ID.\
+\ls2\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 DeletionPolicy
+\f1\b0 :\'a0
+\f0\b Retain
+\f1\b0 , so it isn\'92t deleted with the stack.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Lambda Execution Role
+\f1\b0 \'a0that can update ECR policies (describe, get, set).\
+\ls2\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Lambda Function
+\f1\b0 \'a0that enumerates ECR repositories and appends a cross-account pull policy to each.\
+\ls2\ilvl0
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Custom Resource
+\f1\b0 \'a0to trigger the Lambda function on stack creation or update.\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs64 \cf2 CloudFormation Template\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 Copy and save the following template (e.g., as\'a0
+\f0\b cross-account-readonly-ecr.yaml
+\f1\b0 ):\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs30\fsmilli15200 \cf4 \cb5 \strokec4 AWSTemplateFormatVersion: '2010-09-09'\cb1 \
+\cb5 Description: >\cb1 \
+\cb5   Creates a cross-account read-only IAM role with ExternalId and appends ECR\cb1 \
+\cb5   repository policies to allow pulling from an existing role in another account.\cb1 \
+\cb5   Includes:\cb1 \
+\cb5     - ReadOnlyAccess\cb1 \
+\cb5     - AWSSecurityHubReadOnlyAccess\cb1 \
+\cb5     - AmazonEC2ContainerRegistryReadOnly\cb1 \
+\cb5     - AmazonInspector2ReadOnlyAccess\cb1 \
+\
+\cb5 Resources:\cb1 \
+\cb5   ########################################################################\cb1 \
+\cb5   # 1. The Cross-Account Read-Only IAM Role (Target Account)\cb1 \
+\cb5   ########################################################################\cb1 \
+\cb5   CrossAccountReadOnlyRole:\cb1 \
+\cb5     Type: AWS::IAM::Role\cb1 \
+\cb5     DeletionPolicy: Retain\cb1 \
+\cb5     Properties:\cb1 \
+\cb5       RoleName: TuskiraCrossAccountReadOnlyRole\cb1 \
+\cb5       AssumeRolePolicyDocument:\cb1 \
+\cb5         Version: '2012-10-17'\cb1 \
+\cb5         Statement:\cb1 \
+\cb5           - Effect: Allow\cb1 \
+\cb5             Principal:\cb1 \
+\cb5               AWS: "arn:aws:iam::324037289929:role/tuskira-data-collection"\cb1 \
+\cb5             Action: sts:AssumeRole\cb1 \
+\cb5             Condition:\cb1 \
+\cb5               StringEquals:\cb1 \
+\cb5                 sts:ExternalId: "tuskira20250401"\cb1 \
+\cb5       ManagedPolicyArns:\cb1 \
+\cb5         - arn:aws:iam::aws:policy/ReadOnlyAccess\cb1 \
+\cb5         - arn:aws:iam::aws:policy/AWSSecurityHubReadOnlyAccess\cb1 \
+\cb5         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly\cb1 \
+\cb5         - arn:aws:iam::aws:policy/AmazonInspector2ReadOnlyAccess\cb1 \
+\
+\cb5   ########################################################################\cb1 \
+\cb5   # 2. Lambda Execution Role for the Custom Resource\cb1 \
+\cb5   ########################################################################\cb1 \
+\cb5   ECRPolicyUpdaterRole:\cb1 \
+\cb5     Type: AWS::IAM::Role\cb1 \
+\cb5     Properties:\cb1 \
+\cb5       AssumeRolePolicyDocument:\cb1 \
+\cb5         Version: '2012-10-17'\cb1 \
+\cb5         Statement:\cb1 \
+\cb5           - Effect: Allow\cb1 \
+\cb5             Principal:\cb1 \
+\cb5               Service: lambda.amazonaws.com\cb1 \
+\cb5             Action: sts:AssumeRole\cb1 \
+\cb5       Path: "/"\cb1 \
+\cb5       Policies:\cb1 \
+\cb5         - PolicyName: ECRPolicyUpdaterRolePolicy\cb1 \
+\cb5           PolicyDocument:\cb1 \
+\cb5             Version: '2012-10-17'\cb1 \
+\cb5             Statement:\cb1 \
+\cb5               # Allows reading and setting ECR repository policies\cb1 \
+\cb5               - Effect: Allow\cb1 \
+\cb5                 Action:\cb1 \
+\cb5                   - ecr:DescribeRepositories\cb1 \
+\cb5                   - ecr:GetRepositoryPolicy\cb1 \
+\cb5                   - ecr:SetRepositoryPolicy\cb1 \
+\cb5                 Resource: "*"\cb1 \
+\cb5               # Allows writing logs\cb1 \
+\cb5               - Effect: Allow\cb1 \
+\cb5                 Action:\cb1 \
+\cb5                   - logs:CreateLogGroup\cb1 \
+\cb5                   - logs:CreateLogStream\cb1 \
+\cb5                   - logs:PutLogEvents\cb1 \
+\cb5                 Resource: "*"\cb1 \
+\
+\cb5   ########################################################################\cb1 \
+\cb5   # 3. Lambda Function to APPEND ECR Policy Statement\cb1 \
+\cb5   ########################################################################\cb1 \
+\cb5   ECRPolicyUpdaterFunction:\cb1 \
+\cb5     Type: AWS::Lambda::Function\cb1 \
+\cb5     Properties:\cb1 \
+\cb5       Runtime: python3.9\cb1 \
+\cb5       Handler: index.handler\cb1 \
+\cb5       Role: !GetAtt ECRPolicyUpdaterRole.Arn\cb1 \
+\cb5       Timeout: 120\cb1 \
+\cb5       MemorySize: 512\cb1 \
+\cb5       Code:\cb1 \
+\cb5         ZipFile: |\cb1 \
+\cb5           import json\cb1 \
+\cb5           import boto3\cb1 \
+\cb5           import cfnresponse\cb1 \
+\cb5           from botocore.exceptions import ClientError\cb1 \
+\
+\cb5           def handler(event, context):\cb1 \
+\cb5               """\cb1 \
+\cb5               This Lambda:\cb1 \
+\cb5                 - Lists all ECR repositories in the region.\cb1 \
+\cb5                 - For each repo, fetches its existing repository policy (if any).\cb1 \
+\cb5                 - Appends (or updates) a statement allowing cross-account pull access.\cb1 \
+\cb5                 - Sets the new merged policy back to the repo.\cb1 \
+\cb5               """\cb1 \
+\cb5               try:\cb1 \
+\cb5                   # Only handle 'Create' or 'Update' events. For 'Delete', just respond SUCCESS.\cb1 \
+\cb5                   if event['RequestType'] in ['Create', 'Update']:\cb1 \
+\cb5                       ecr_client = boto3.client('ecr')\cb1 \
+\
+\cb5                       cross_account_principal = "arn:aws:iam::324037289929:role/tuskira-data-collection"\cb1 \
+\cb5                       statement_sid = "CrossAccountPullFromDataCollectionRole"\cb1 \
+\
+\cb5                       # Policy statement to append\cb1 \
+\cb5                       new_statement = \{\cb1 \
+\cb5                           "Sid": statement_sid,\cb1 \
+\cb5                           "Effect": "Allow",\cb1 \
+\cb5                           "Principal": \{"AWS": cross_account_principal\},\cb1 \
+\cb5                           "Action": [\cb1 \
+\cb5                               "ecr:BatchGetImage",\cb1 \
+\cb5                               "ecr:GetDownloadUrlForLayer",\cb1 \
+\cb5                               "ecr:DescribeImages",\cb1 \
+\cb5                               "ecr:ListImages",\cb1 \
+\cb5                               "ecr:BatchCheckLayerAvailability"\cb1 \
+\cb5                           ]\cb1 \
+\cb5                       \}\cb1 \
+\
+\cb5                       paginator = ecr_client.get_paginator('describe_repositories')\cb1 \
+\cb5                       for page in paginator.paginate():\cb1 \
+\cb5                           for repo in page['repositories']:\cb1 \
+\cb5                               repo_name = repo['repositoryName']\cb1 \
+\cb5                               print(f"Processing ECR repository: \{repo_name\}")\cb1 \
+\
+\cb5                               # Try to retrieve existing policy\cb1 \
+\cb5                               try:\cb1 \
+\cb5                                   get_resp = ecr_client.get_repository_policy(repositoryName=repo_name)\cb1 \
+\cb5                                   existing_policy_text = get_resp['policyText']\cb1 \
+\cb5                                   policy_json = json.loads(existing_policy_text)\cb1 \
+\cb5                               except ClientError as e:\cb1 \
+\cb5                                   if e.response['Error']['Code'] == 'RepositoryPolicyNotFoundException':\cb1 \
+\cb5                                       # No existing policy\cb1 \
+\cb5                                       print(f"No existing policy for \{repo_name\}, creating fresh one.")\cb1 \
+\cb5                                       policy_json = \{\cb1 \
+\cb5                                           "Version": "2012-10-17",\cb1 \
+\cb5                                           "Statement": []\cb1 \
+\cb5                                       \}\cb1 \
+\cb5                                   else:\cb1 \
+\cb5                                       raise\cb1 \
+\
+\cb5                               # Merge or update the statement\cb1 \
+\cb5                               updated = False\cb1 \
+\cb5                               for stmt in policy_json.get('Statement', []):\cb1 \
+\cb5                                   # If we already have a statement with the same 'Sid'\cb1 \
+\cb5                                   if stmt.get("Sid") == statement_sid:\cb1 \
+\cb5                                       print("Found existing statement with same Sid, updating it.")\cb1 \
+\cb5                                       stmt.update(new_statement)\cb1 \
+\cb5                                       updated = True\cb1 \
+\cb5                                       break\cb1 \
+\
+\cb5                               # If not found, append it\cb1 \
+\cb5                               if not updated:\cb1 \
+\cb5                                   print("Appending new cross-account statement.")\cb1 \
+\cb5                                   policy_json['Statement'].append(new_statement)\cb1 \
+\
+\cb5                               # Now set the updated policy\cb1 \
+\cb5                               ecr_client.set_repository_policy(\cb1 \
+\cb5                                   repositoryName=repo_name,\cb1 \
+\cb5                                   policyText=json.dumps(policy_json),\cb1 \
+\cb5                                   force=True\cb1 \
+\cb5                               )\cb1 \
+\
+\cb5                   # Respond SUCCESS in all cases (including Delete).\cb1 \
+\cb5                   cfnresponse.send(event, context, cfnresponse.SUCCESS, \{\})\cb1 \
+\cb5               except Exception as e:\cb1 \
+\cb5                   print(f"Error: \{e\}")\cb1 \
+\cb5                   cfnresponse.send(event, context, cfnresponse.FAILED, \{\})\cb1 \
+\
+\cb5   ########################################################################\cb1 \
+\cb5   # 4. The Custom Resource that triggers the Lambda\cb1 \
+\cb5   ########################################################################\cb1 \
+\cb5   ECRPolicyUpdaterCR:\cb1 \
+\cb5     Type: AWS::CloudFormation::CustomResource\cb1 \
+\cb5     Properties:\cb1 \
+\cb5       ServiceToken: !GetAtt ECRPolicyUpdaterFunction.Arn\cb1 \
+\
+\cb5 Outputs:\cb1 \
+\cb5   CrossAccountReadOnlyRoleArn:\cb1 \
+\cb5     Description: "ARN of the cross-account read-only role."\cb1 \
+\cb5     Value: !GetAtt CrossAccountReadOnlyRole.Arn\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \
+\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs48 \cf2 \strokec2 Template Highlights\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\fs32 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 CrossAccountReadOnlyRole
+\f1\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls3\ilvl1\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Attaches four AWS-managed policies:\
+\pard\tx1660\tx2160\pardeftab720\li2160\fi-2160\partightenfactor0
+\ls3\ilvl2
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	a	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 ReadOnlyAccess
+\f1\b0 \'a0\'96 baseline read access to AWS assets.\
+\ls3\ilvl2
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	b	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AWSSecurityHubReadOnlyAccess
+\f1\b0 \'a0\'96 read-only Security Hub findings.\
+\ls3\ilvl2
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	c	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AmazonEC2ContainerRegistryReadOnly
+\f1\b0 \'a0\'96 read-only ECR, including describing scan results.\
+\ls3\ilvl2
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	d	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 AmazonInspector2ReadOnlyAccess
+\f1\b0 \'a0\'96 read-only Inspector2 findings for EC2/Lambda.\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls3\ilvl1
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Trust policy
+\f1\b0 \'a0uses sts:ExternalId: "tuskira20250401" and principal\'a0
+\f2\fs30\fsmilli15200 \cb3 arn:aws:iam::324037289929:role/tuskira-data-collection
+\f1\fs32 \cb1 .\
+\ls3\ilvl1
+\f0\b \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 DeletionPolicy
+\f1\b0 :\'a0
+\f0\b Retain
+\f1\b0 \'a0ensures the role remains if the stack is deleted.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 ECRPolicyUpdaterFunction
+\f1\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls3\ilvl1\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 A Python Lambda function that runs on stack creation or update.\
+\ls3\ilvl1\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 It iterates over all ECR repositories and appends a cross-account pull policy (ecr:BatchGetImage, ecr:GetDownloadUrlForLayer, etc.) to the role\'a0
+\f2\fs30\fsmilli15200 \cb3 arn:aws:iam::324037289929:role/tuskira-data-collection
+\f1\fs32 \cb1 .\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Outputs
+\f1\b0 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls3\ilvl1
+\f0\b \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u9702 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 CrossAccountReadOnlyRoleArn
+\f1\b0 : The new role\'92s ARN. Look in the CloudFormation Outputs after creation.\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs64 \cf2 Deployment Methods\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 Below are high-level steps to deploy this CloudFormation template. Adjust as needed for your environment.\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs48 \cf2 Single Stack (AWS Console)\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls4\ilvl0
+\f1\b0\fs32 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Sign in to the\'a0
+\f0\b target account
+\f1\b0 \'a0(where you want to create the read-only role).\
+\ls4\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Go to\'a0
+\f0\b CloudFormation
+\f1\b0 \'a0>\'a0
+\f0\b Stacks
+\f1\b0 \'a0>\'a0
+\f0\b Create stack
+\f1\b0 .\
+\ls4\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Choose\'a0
+\f0\b Upload a template file
+\f1\b0 , select your YAML file, then\'a0
+\f0\b Next
+\f1\b0 .\
+\ls4\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	4	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Provide a\'a0
+\f0\b Stack name
+\f1\b0 \'a0(e.g.,\'a0
+\f0\b TuskiraCrossAccountReadOnlyStack
+\f1\b0 ).\
+\ls4\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	5	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 (Optional) Adjust stack options, tags, etc.\
+\ls4\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	6	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Click\'a0
+\f0\b Create stack
+\f1\b0 \'a0and wait for\'a0
+\f0\b CREATE_COMPLETE
+\f1\b0 \'a0status.\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs48 \cf2 Single Stack (AWS CLI)\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 From a local machine or CI/CD environment with credentials for the\'a0
+\f0\b target account
+\f1\b0 :\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs30\fsmilli15200 \cf4 \cb5 \strokec4 aws cloudformation create-stack \\\cb1 \
+\cb5   --stack-name TuskiraCrossAccountReadOnlyStack \\\cb1 \
+\cb5   --template-file cross-account-readonly-ecr.yaml \\\cb1 \
+\cb5   --capabilities CAPABILITY_NAMED_IAM \\\cb1 \
+\cb5   --region us-east-1\cb1 \
+\
+\cb5 aws cloudformation wait stack-create-complete \\\cb1 \
+\cb5   --stack-name TuskiraCrossAccountReadOnlyStack \\\cb1 \
+\cb5   --region us-east-1\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs48 \cf2 \strokec2 StackSets\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 If you need to roll out this role across\'a0
+\f0\b multiple accounts
+\f1\b0 \'a0or\'a0
+\f0\b regions
+\f1\b0 :\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls5\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	1	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Sign in to the\'a0
+\f0\b management account
+\f1\b0 \'a0(or delegated admin).\
+\ls5\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	2	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Go to\'a0
+\f0\b CloudFormation
+\f1\b0 \'a0>\'a0
+\f0\b StackSets
+\f1\b0 \'a0>\'a0
+\f0\b Create StackSet
+\f1\b0 .\
+\ls5\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	3	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Provide the same template and configure your target accounts/regions.\
+\ls5\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	4	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Deploy and wait for StackSet completion.\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs64 \cf2 Retrieving Outputs\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 After deployment, check the\'a0
+\f0\b Outputs
+\f1\b0 \'a0in the CloudFormation Console or use the AWS CLI:\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs30\fsmilli15200 \cf4 \cb5 \strokec4 aws cloudformation describe-stacks \\\cb1 \
+\cb5   --stack-name TuskiraCrossAccountReadOnlyStack \\\cb1 \
+\cb5   --query "Stacks[0].Outputs" \\\cb1 \
+\cb5   --region us-east-1\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \
+\pard\pardeftab720\sa400\partightenfactor0
+
+\fs32 \cf2 \strokec2 You will see something like:\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs30\fsmilli15200 \cf4 \cb5 \strokec4 [\cb1 \
+\cb5   \{\cb1 \
+\cb5     "OutputKey": "CrossAccountReadOnlyRoleArn",\cb1 \
+\cb5     "OutputValue": "arn:aws:iam::123456789012:role/TuskiraCrossAccountReadOnlyRole"\cb1 \
+\cb5   \}\cb1 \
+\cb5 ]\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\f1\fs22 \cf4 \
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f0\b\fs64 \cf2 \strokec2 Provide the Role ARN to Tuskira\
+\pard\pardeftab720\sa400\partightenfactor0
+
+\f1\b0\fs32 \cf2 Once you have copied the Role ARN (for example,\'a0
+\f2\fs30\fsmilli15200 \cb3 arn:aws:iam::123456789012:role/TuskiraCrossAccountReadOnlyRole
+\f1\fs32 \cb1 ),\'a0
+\f0\b share that ARN
+\f1\b0 \'a0with Tuskira. This role grants Tuskira the required read-only access to AWS assets, AWS Inspector findings, and Security Hub findings, and also allows pulling ECR images (via the appended cross-account policy).\
+}
