@@ -58,7 +58,7 @@ This configuration performs the following actions:
 ## Directory Structure
 
 ```
-cft_terraform/
+tusk-aws-cross-account-terraform/
 ├── README.md                    # This file
 ├── main/                        # Main configuration directory
 │   ├── main.tf                  # Provider config and module call
@@ -136,7 +136,7 @@ The user/role deploying this configuration needs the following permissions in th
 ### Step 1: Clone and Navigate
 ```bash
 git clone <repository-url>
-cd cft_terraform/main
+cd tusk-aws-cross-account-terraform/main
 ```
 
 ### Step 2: Initialize Terraform

@@ -52,9 +52,61 @@ resource "aws_iam_role_policy_attachment" "inspector_readonly" {
 
 data "aws_ecr_repositories" "all" {}
 
+data "aws_ecr_repository_policy" "existing" {
+  for_each = toset(data.aws_ecr_repositories.all.names)
+  
+  repository_name = each.key
+}
+
+locals {
+  existing_policies = {
+    for repo in data.aws_ecr_repositories.all.names : repo => try(
+      jsondecode(data.aws_ecr_repository_policy.existing[repo].policy),
+      { Version = "2012-10-17", Statement = [] }
+    )
+  }
+}
+
 data "aws_iam_policy_document" "ecr_pull_policy" {
   for_each = toset(data.aws_ecr_repositories.all.names)
 
+  # Preserve existing statements
+  dynamic "statement" {
+    for_each = try(local.existing_policies[each.key].Statement, [])
+    content {
+      sid           = try(statement.value.Sid, null)
+      effect        = try(statement.value.Effect, "Allow")
+      actions       = try(statement.value.Action, [])
+      not_actions   = try(statement.value.NotAction, [])
+      resources     = try(statement.value.Resource, [])
+      not_resources = try(statement.value.NotResource, [])
+      
+      dynamic "principals" {
+        for_each = try(statement.value.Principal, {}) != {} ? [statement.value.Principal] : []
+        content {
+          type        = try(principals.value.AWS != null ? "AWS" : keys(principals.value)[0], "*")
+          identifiers = try(principals.value.AWS != null ? (
+            is_string(principals.value.AWS) ? [principals.value.AWS] : principals.value.AWS
+          ) : (
+            is_string(principals.value[keys(principals.value)[0]]) ? 
+            [principals.value[keys(principals.value)[0]]] : 
+            principals.value[keys(principals.value)[0]]
+          ), ["*"])
+        }
+      }
+      
+      dynamic "condition" {
+        for_each = try(statement.value.Condition, {})
+        content {
+          test     = keys(condition.value)[0]
+          variable = keys(condition.value[keys(condition.value)[0]])[0]
+          values   = condition.value[keys(condition.value)[0]][keys(condition.value[keys(condition.value)[0]])[0]]
+        }
+      }
+    }
+  }
+
+  # Add new cross-account statement
   statement {
     sid    = "CrossAccountPullFromDataCollectionRole"
     effect = "Allow"
