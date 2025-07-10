@@ -10,16 +10,16 @@
 # Example initialization command:
 # terraform init -backend-config="bucket=my-terraform-state-bucket"
 
-terraform {
-  backend "s3" {
-    bucket = ""  # Replace with your S3 bucket name
-    key    = "terraform.tfstate"
-    region = "us-east-1"  # Change to your preferred region
-    
-    # Optional: Enable state locking with DynamoDB
-    # dynamodb_table = "terraform-state-lock"
-    
-    # Optional: Enable server-side encryption
-    # encrypt = true
-  }
-}
+# terraform {
+#   backend "s3" {
+#     bucket = ""  # Replace with your S3 bucket name
+#     key    = "terraform.tfstate"
+#     region = "us-east-1"  # Change to your preferred region
+#
+#     # Optional: Enable state locking with DynamoDB
+#     # dynamodb_table = "terraform-state-lock"
+#
+#     # Optional: Enable server-side encryption
+#     # encrypt = true
+#   }
+# }
