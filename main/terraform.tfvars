@@ -1,0 +1,5 @@
+aws_region                = "us-east-1"
+principal_aws_account_id   = "324037289929"
+principal_role_name        = "tuskira-data-collection"
+external_id               = "tuskira20250401"
+cross_account_role_name   = "TuskiraCrossAccountReadOnlyRole"
