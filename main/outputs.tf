@@ -8,7 +8,7 @@ output "role_name" {
   value       = module.tuskira_cross_account.role_name
 }
 
-output "ecr_repositories_updated" {
-  description = "List of ECR repositories that had policies updated"
-  value       = module.tuskira_cross_account.ecr_repositories_updated
-}
+# output "ecr_repositories_updated" {
+#   description = "List of ECR repositories that had policies updated"
+#   value       = module.tuskira_cross_account.
+# }
