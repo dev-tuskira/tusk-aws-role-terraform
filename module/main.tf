@@ -21,7 +21,7 @@ resource "aws_iam_role" "cross_account_readonly" {
   assume_role_policy = data.aws_iam_policy_document.cross_account_assume_role.json
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   tags = {
