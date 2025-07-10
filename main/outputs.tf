@@ -7,8 +7,3 @@ output "role_name" {
   description = "Name of the cross-account read-only role"
   value       = module.tuskira_cross_account.role_name
 }
-
-# output "ecr_repositories_updated" {
-#   description = "List of ECR repositories that had policies updated"
-#   value       = module.tuskira_cross_account.
-# }
