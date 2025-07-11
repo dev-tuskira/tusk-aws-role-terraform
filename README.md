@@ -59,7 +59,7 @@ This configuration performs the following actions:
 ## Directory Structure
 
 ```
-tusk-aws-cross-account-terraform/
+tusk-aws-role-terraform/
 ├── README.md                    # This file
 ├── main/                        # Main configuration directory
 │   ├── main.tf                  # Provider config and module call
@@ -170,7 +170,7 @@ terraform init -backend-config="bucket=your-terraform-state-bucket-name"
 ### Step 1: Clone and Navigate
 ```bash
 git clone <repository-url>
-cd tusk-aws-cross-account-terraform/main
+cd tusk-aws-role-terraform/main
 ```
 
 ### Step 2: Initialize Terraform
