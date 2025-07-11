@@ -130,7 +130,7 @@ The user/role deploying this configuration needs the following permissions in th
 | `aws_region` | AWS region to deploy resources | `us-east-1` | No |
 | `principal_aws_account_id` | AWS Account ID of the principal | `324037289929` | No |
 | `principal_role_name` | Name of the role in principal account | `tuskira-data-collection` | No |
-| `external_id` | External ID for assume role security | `tuskira20250401` | No |
+| `external_id` | External ID for assume role security | `xxxxxxxxxxxxxxx` | No |
 | `cross_account_role_name` | Name of the created IAM role | `TuskiraCrossAccountReadOnlyRole` | No |
 
 ## Backend Configuration
